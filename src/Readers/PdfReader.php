@@ -8,18 +8,18 @@ use Smalot\PdfParser\Parser as PdfParser;
 
 class PdfReader extends FileReaderAbstract
 {
-	private Document $reader;
+    private Document $reader;
 
-	public function __construct(string $path)
-	{
-		parent::__construct($path);
+    public function __construct(string $path)
+    {
+        parent::__construct($path);
 
-		$parser = new PdfParser();
-		$this->reader = $parser->parseFile($path);
-	}
+        $parser = new PdfParser();
+        $this->reader = $parser->parseFile($path);
+    }
 
-	function getText(): string
-	{
-		return $this->reader->getText($this->limit);
-	}
+    public function getText(): string
+    {
+        return $this->reader->getText($this->limit);
+    }
 }

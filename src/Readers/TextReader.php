@@ -3,25 +3,25 @@
 namespace LaravelAILabs\FileAssistant\Readers;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use LaravelAILabs\FileAssistant\Abstracts\FileReaderAbstract;
 use Illuminate\Filesystem\Filesystem;
+use LaravelAILabs\FileAssistant\Abstracts\FileReaderAbstract;
 
 class TextReader extends FileReaderAbstract
 {
-	private Filesystem $reader;
+    private Filesystem $reader;
 
-	public function __construct(string $path)
-	{
-		parent::__construct($path);
+    public function __construct(string $path)
+    {
+        parent::__construct($path);
 
-		$this->reader = new Filesystem();
-	}
+        $this->reader = new Filesystem();
+    }
 
-	/**
-	 * @throws FileNotFoundException
-	 */
-	function getText(): string
-	{
-		return null === $this->limit ? $this->reader->get($this->path) : collect($this->reader->lines($this->path)->slice(0, $this->limit))->join(PHP_EOL);
-	}
+    /**
+     * @throws FileNotFoundException
+     */
+    public function getText(): string
+    {
+        return $this->limit === null ? $this->reader->get($this->path) : collect($this->reader->lines($this->path)->slice(0, $this->limit))->join(PHP_EOL);
+    }
 }

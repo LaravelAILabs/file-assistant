@@ -3,3 +3,4 @@ vendor
 composer.lock
 .env.testing
 .phpunit.result.cache
+build

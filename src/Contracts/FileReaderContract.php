@@ -4,6 +4,7 @@ namespace LaravelAILabs\FileAssistant\Contracts;
 
 interface FileReaderContract
 {
-	function limit(int $limit): self;
-	function getText(): string;
+    public function limit(int $limit): self;
+
+    public function getText(): string;
 }
