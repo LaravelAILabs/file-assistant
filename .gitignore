@@ -4,3 +4,4 @@ composer.lock
 .env.testing
 .phpunit.result.cache
 build
+tests/~$ipsum.docx
