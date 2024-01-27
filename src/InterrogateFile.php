@@ -7,11 +7,17 @@ use AdrianTanase\VectorStore\Providers\Pinecone\Requests\PineconeQueryRequest;
 use Illuminate\Support\Facades\Config;
 use LaravelAILabs\FileAssistant\Abstracts\InterrogateFileAbstract;
 use LaravelAILabs\FileAssistant\Enums\RoleType;
+use LaravelAILabs\FileAssistant\Models\Conversation;
 use LaravelAILabs\FileAssistant\Models\File;
 use LaravelAILabs\FileAssistant\Models\Message;
 
 final class InterrogateFile extends InterrogateFileAbstract
 {
+    public function getConversation(): Conversation
+    {
+        return $this->conversation;
+    }
+
     public function prompt(string $prompt): string
     {
         $embedding = $this->embedPrompt($prompt);
@@ -36,7 +42,7 @@ final class InterrogateFile extends InterrogateFileAbstract
         ]);
 
         $response = $this->openAiClient->chat()->create([
-            'model' => 'gpt-4',
+            'model' => Config::get('file-assistant.openai.model'),
             'messages' => array_merge(
                 [
                     [

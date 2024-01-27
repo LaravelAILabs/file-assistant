@@ -8,7 +8,8 @@ return [
         'files' => env('FILE_ASSISTANT_FILES_TABLE', 'fa_files'),
     ],
     'openai' => [
-        'api_key' => env('OPENAI_API_KEY', ''),
+        'api_key' => env('FILE_ASSISTANT_OPENAI_API_KEY', ''),
+        'model' => env('FILE_ASSISTANT_OPENAI_MODEL', 'gpt-4'),
     ],
     'pinecone' => [
         'dataset' => env('FILE_ASSISTANT_PINECONE_DATASET', ''),

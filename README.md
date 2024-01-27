@@ -25,12 +25,51 @@ You can publish the config file with:
 php artisan vendor:publish --tag="file-assistant-config"
 ```
 
+## Setup
+Currently using [Pinecone.io](https://pinecone.io) as the vector database and [OpenAI](https://openai.com/) as the LLM. Planning to make it so any LLM can be used, as well as any Vector Database implemented in [Laravel Vector Store](adrianmtanase/laravel-vector-store).
+
+Add the following secrets to your `.env`:
+
+```dotenv
+VECTOR_STORE_PINECONE_API_KEY=YOUR_PINECONE_API_KEY
+VECTOR_STORE_PINECONE_ENVIRONMENT=YOUR_PINECONE_ENVIRONMENT
+FILE_ASSISTANT_OPENAI_API_KEY=YOUR_OPENAPI_KEY
+FILE_ASSISTANT_PINECONE_DATASET=YOUR_PINECONE_INDEX_NAME
+```
+
+You can find your [OpenAI API Key here](https://platform.openai.com/api-keys).
+
 ## Usage
 
+#### 1. Start a new conversation
 ```php
-$dialog = FileAssistant::addFile('PATH_TO_YOUR_FILE')->initialize();
+$dialog = FileAssistant::addFile('PATH_TO_YOUR_FILE')
+                             ->addFile('PATH_TO_YOUR_SECOND_FILE')
+                             ->initialize();
+
 echo $dialog->prompt('What is this document about?')
 ```
+
+#### 2. Resume a conversation
+```php
+$dialog = FileAssistant::setConversation(Conversation::find(1))
+                             ->setUser(Auth::user())
+                             ->initialize();
+
+// grab the conversation and display the messages
+/**
+* @var \LaravelAILabs\FileAssistant\Models\Conversation $conversation
+ */
+$conversation = $dialog->getConversation();
+foreach ($conversation->messages as $message) {
+    echo sprintf('%s: %s <br>', $message->role, $message->content);
+}
+
+echo $dialog->prompt('Where did we leave off?')
+```
+
+#### 3. Grab messages and display
+The package creates 3 tables: `conversations`, `messages`, `files`, `conversation_files`. Feel free to modify their names using the [file-assistant config](https://github.com/LaravelAILabs/file-assistant/blob/main/config/file-assistant.php) environment variables. Use the models to interact with the database and display the messages of a conversation.
 
 ## Works with
 - PDF

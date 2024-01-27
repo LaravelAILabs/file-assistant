@@ -24,7 +24,8 @@ abstract class TestCase extends Orchestra
         $app['config']->set('vector-store.pinecone_environment', env('VECTOR_STORE_PINECONE_ENVIRONMENT', ''));
 
         // set open api key and pinecone dataset
-        $app['config']->set('file-assistant.openai.api_key', env('OPENAI_API_KEY', ''));
+        $app['config']->set('file-assistant.openai.api_key', env('FILE_ASSISTANT_OPENAI_API_KEY', ''));
+        $app['config']->set('file-assistant.openai.model', env('FILE_ASSISTANT_OPENAI_MODEL', 'gpt-4'));
         $app['config']->set('file-assistant.pinecone.dataset', env('FILE_ASSISTANT_PINECONE_DATASET', ''));
 
         // set tables

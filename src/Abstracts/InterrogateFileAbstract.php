@@ -2,11 +2,11 @@
 
 namespace LaravelAILabs\FileAssistant\Abstracts;
 
-use LaravelAILabs\FileAssistant\Contracts\InterogateFileContract;
+use LaravelAILabs\FileAssistant\Contracts\InterrogateFileContract;
 use LaravelAILabs\FileAssistant\Models\Conversation;
 use OpenAI\Client as OpenAIClient;
 
-abstract class InterrogateFileAbstract implements InterogateFileContract
+abstract class InterrogateFileAbstract implements InterrogateFileContract
 {
     public function __construct(protected Conversation $conversation, protected OpenAIClient $openAiClient)
     {
