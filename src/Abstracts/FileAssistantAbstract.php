@@ -32,17 +32,13 @@ abstract class FileAssistantAbstract implements FileAssistantContract
         $this->openAiClient = OpenAI::client(Config::get('file-assistant.openai.api_key'));
     }
 
-    public function addFile(string $filePath): self
-    {
-        $this->files[] = new FileWrapper($filePath);
-
-        return $this;
-    }
-
+    /**
+     * Create embeddings from a file
+     */
     protected function createEmbeddings(FileWrapper $fileWrapper): array
     {
         $content = Str::of($fileWrapper->getReader()->getText())
-            ->split("/\n\n/")
+            ->split(pattern: "/\n\n/", limit: 8_000)
             ->toArray();
 
         return [
@@ -54,6 +50,9 @@ abstract class FileAssistantAbstract implements FileAssistantContract
         ];
     }
 
+    /**
+     * Store the embeddings of a file in a namespace named after its file hash
+     */
     protected function storeEmbeddings(FileWrapper $fileWrapper, array $embeddings, array $content): void
     {
         collect($embeddings)->chunk(20)->each(function (Collection $chunk, $chunkIndex) use ($content, $fileWrapper) {
@@ -72,37 +71,5 @@ abstract class FileAssistantAbstract implements FileAssistantContract
                 ->namespace($fileWrapper->getHash())
                 ->create($upsertRequests);
         });
-    }
-
-    /**
-     * Sets the user model.
-     *
-     * @param  Model  $model  The user model to be set.
-     */
-    public function setUser(Model $model): self
-    {
-        $this->userModel = $model;
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function setConversation(Conversation $conversation): self
-    {
-        $this->conversationModel = $conversation;
-
-        return $this;
-    }
-
-    public function getUser(): ?Model
-    {
-        return $this->userModel;
-    }
-
-    public function getConversation(): ?Conversation
-    {
-        return $this->conversationModel;
     }
 }

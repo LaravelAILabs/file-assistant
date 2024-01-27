@@ -4,5 +4,5 @@ namespace LaravelAILabs\FileAssistant\Contracts;
 
 interface InterogateFileContract
 {
-    public function ask(string $prompt): string;
+    public function prompt(string $prompt): string;
 }

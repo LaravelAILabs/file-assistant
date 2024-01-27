@@ -2,6 +2,7 @@
 
 namespace LaravelAILabs\FileAssistant;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use LaravelAILabs\FileAssistant\Abstracts\FileAssistantAbstract;
 use LaravelAILabs\FileAssistant\Models\Conversation;
@@ -13,6 +14,40 @@ use LaravelAILabs\FileAssistant\Models\Conversation;
  */
 class FileAssistant extends FileAssistantAbstract
 {
+    /**
+     * (Optional) Add a file
+     */
+    public function addFile(string $filePath): self
+    {
+        $this->files[] = new FileWrapper($filePath);
+
+        return $this;
+    }
+
+    /**
+     * (Optional) Sets the user model.
+     *
+     * @param  Model  $model  The user model to be set.
+     */
+    public function setUser(Model $model): self
+    {
+        $this->userModel = $model;
+
+        return $this;
+    }
+
+    /**
+     * (Optional) Resume a conversion
+     *
+     * @return $this
+     */
+    public function setConversation(Conversation $conversation): self
+    {
+        $this->conversationModel = $conversation;
+
+        return $this;
+    }
+
     /**
      * Initializes the file interrogation process.
      *

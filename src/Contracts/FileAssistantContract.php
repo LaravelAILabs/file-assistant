@@ -12,11 +12,7 @@ interface FileAssistantContract
 
     public function setUser(Model $model): self;
 
-    public function getUser(): ?Model;
-
     public function setConversation(Conversation $conversation): self;
-
-    public function getConversation(): ?Conversation;
 
     public function initialize(): InterrogateFile;
 }

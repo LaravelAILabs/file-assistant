@@ -8,10 +8,11 @@ use Illuminate\Support\Facades\Config;
 use LaravelAILabs\FileAssistant\Abstracts\InterrogateFileAbstract;
 use LaravelAILabs\FileAssistant\Enums\RoleType;
 use LaravelAILabs\FileAssistant\Models\File;
+use LaravelAILabs\FileAssistant\Models\Message;
 
-class InterrogateFile extends InterrogateFileAbstract
+final class InterrogateFile extends InterrogateFileAbstract
 {
-    public function ask(string $prompt): string
+    public function prompt(string $prompt): string
     {
         $embedding = $this->embedPrompt($prompt);
 
@@ -36,16 +37,26 @@ class InterrogateFile extends InterrogateFileAbstract
 
         $response = $this->openAiClient->chat()->create([
             'model' => 'gpt-4',
-            'messages' => [
+            'messages' => array_merge(
                 [
-                    'role' => 'system',
-                    'content' => sprintf('Here are relevant snippets from the file. Please base your answers on them: %s', $responses),
+                    [
+                        'role' => RoleType::SYSTEM->value,
+                        'content' => sprintf('Here are relevant snippets from the file. Please base your answers on them: %s', $responses),
+                    ],
                 ],
+                $this->conversation->messages->map(function (Message $message) {
+                    return [
+                        'role' => $message->role,
+                        'content' => $message->content,
+                    ];
+                })->toArray(),
                 [
-                    'role' => 'user',
-                    'content' => $prompt,
-                ],
-            ],
+                    [
+                        'role' => RoleType::USER->value,
+                        'content' => $prompt,
+                    ],
+                ]
+            ),
         ]);
 
         $assistantResponse = $response->choices[0]?->message?->content ?? '';
