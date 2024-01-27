@@ -8,8 +8,9 @@ class PdfAIQueryTest extends TestCase
 {
     public function test_it_can_query_pdf_files()
     {
-        $response = FileAssistant::from('ipsum.pdf')
-            ->query('What is this paper about?');
+        $response = FileAssistant::from('butterfly_points_and_hyperspace_selections.pdf')
+            ->initialize()
+            ->ask('What is this paper about?');
 
         dd($response);
     }

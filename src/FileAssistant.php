@@ -81,7 +81,7 @@ class FileAssistant extends FileAssistantAbstract
         ]);
 
         // associate the file with the conversation
-        $conversation->files()->associate($file);
+        $conversation->files()->attach($file);
 
         // embed the file's content
         if ($file->wasRecentlyCreated) {

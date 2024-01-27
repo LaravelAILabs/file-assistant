@@ -11,7 +11,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->tableName = Config::get('file-assistant.tables.messages');
+        $this->tableName = sprintf("%s_%s", Config::get('file-assistant.tables.conversations'), Config::get('file-assistant.tables.files'));
     }
 
     /**
@@ -22,8 +22,7 @@ return new class extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('conversation_id')->index();
-            $table->text('content');
-            $table->string('role');
+            $table->unsignedBigInteger('file_id')->index();
             $table->timestamps();
         });
     }

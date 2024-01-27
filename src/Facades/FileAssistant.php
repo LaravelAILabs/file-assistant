@@ -3,11 +3,13 @@
 namespace LaravelAILabs\FileAssistant\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use LaravelAILabs\FileAssistant\InterrogateFile;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static FileAssistant from(string $path)
- * @method static FileAssistant user(Illuminate\Database\Eloquent\Model $model)
- * @method static LaravelAILabs\FileAssistant\InterogateFile initialize()
+ * @method static FileAssistant user(Model $model)
+ * @method static InterrogateFile initialize()
  *
  * @see \LaravelAILabs\FileAssistant\FileAssistant
  */

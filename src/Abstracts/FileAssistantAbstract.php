@@ -29,7 +29,7 @@ abstract class FileAssistantAbstract implements FileAssistantContract
     protected function createEmbeddings(): array
     {
         $content = Str::of($this->reader->getText())
-            ->split("/\f/")
+            ->split("/\n\n/")
             ->toArray();
 
         return [

@@ -8,15 +8,15 @@ use OpenAI\Client as OpenAIClient;
 
 abstract class InterrogateFileAbstract implements InterogateFileContract
 {
-	public function __construct(protected Conversation $conversation, protected OpenAIClient $openAiClient)
-	{
-	}
+    public function __construct(protected Conversation $conversation, protected OpenAIClient $openAiClient)
+    {
+    }
 
-	protected function embedPrompt(string $prompt): array
-	{
-		return $this->openAiClient->embeddings()->create([
-			'model' => 'text-embedding-ada-002',
-			'input' => $prompt,
-		])->embeddings;
-	}
+    protected function embedPrompt(string $prompt): array
+    {
+        return $this->openAiClient->embeddings()->create([
+            'model' => 'text-embedding-ada-002',
+            'input' => $prompt,
+        ])->embeddings;
+    }
 }
