@@ -2,9 +2,9 @@
 
 namespace LaravelAILabs\FileAssistant\Facades;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
 use LaravelAILabs\FileAssistant\InterrogateFile;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static FileAssistant from(string $path)

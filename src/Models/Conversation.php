@@ -37,6 +37,6 @@ class Conversation extends Model
 
     public function files(): BelongsToMany
     {
-        return $this->belongsToMany(File::class, sprintf("%s_%s", Config::get('file-assistant.tables.conversations'), Config::get('file-assistant.tables.files')));
+        return $this->belongsToMany(File::class, sprintf('%s_%s', Config::get('file-assistant.tables.conversations'), Config::get('file-assistant.tables.files')));
     }
 }

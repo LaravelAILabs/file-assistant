@@ -8,10 +8,15 @@ use LaravelAILabs\FileAssistant\Models\Conversation;
 
 interface FileAssistantContract
 {
-    public function from(string $filePath): self;
+    public function addFile(string $filePath): self;
 
-    public function user(Model $model): self;
-    public function conversation(Conversation $conversation): self;
+    public function setUser(Model $model): self;
+
+    public function getUser(): ?Model;
+
+    public function setConversation(Conversation $conversation): self;
+
+    public function getConversation(): ?Conversation;
 
     public function initialize(): InterrogateFile;
 }

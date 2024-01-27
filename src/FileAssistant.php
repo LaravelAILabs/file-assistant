@@ -2,15 +2,9 @@
 
 namespace LaravelAILabs\FileAssistant;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use LaravelAILabs\FileAssistant\Abstracts\FileAssistantAbstract;
-use LaravelAILabs\FileAssistant\Exceptions\UndefinedReaderException;
 use LaravelAILabs\FileAssistant\Models\Conversation;
-use LaravelAILabs\FileAssistant\Models\File;
-use LaravelAILabs\FileAssistant\Readers\PdfReader;
-use LaravelAILabs\FileAssistant\Readers\TextReader;
-use LaravelAILabs\FileAssistant\Readers\WordReader;
 
 /**
  * @class FileAssistant
@@ -19,53 +13,14 @@ use LaravelAILabs\FileAssistant\Readers\WordReader;
  */
 class FileAssistant extends FileAssistantAbstract
 {
-    private ?Model $userModel;
-
-    private ?Conversation $conversationModel;
-
-    public function from(string $filePath): self
-    {
-        // instantiate the reader
-        $this->reader = match ($this->filesystem->mimeType($filePath)) {
-            'application/pdf' => new PdfReader($filePath),
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword' => new WordReader($filePath),
-            'text/plain' => new TextReader($filePath),
-            default => throw new UndefinedReaderException,
-        };
-
-        return $this;
-    }
-
-    /**
-     * Sets the user model.
-     *
-     * @param  Model  $model  The user model to be set.
-     */
-    public function user(Model $model): self
-    {
-        $this->userModel = $model;
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function conversation(Conversation $conversation): self
-    {
-        $this->conversationModel = $conversation;
-
-        return $this;
-    }
-
     /**
      * Initializes the file interrogation process.
      *
      * This method creates a new conversation, generates a file hash, associates the file with the conversation,
      * creates embeddings for the file's content, and stores the embeddings in a vector database. Finally, it returns
-     * an instance of the `InterogateFile` class.
+     * an instance of the `InterrogateFile` class.
      *
-     * @return InterrogateFile The initialized InterogateFile instance.
+     * @return InterrogateFile The initialized InterrogateFile instance.
      */
     public function initialize(): InterrogateFile
     {
@@ -76,19 +31,19 @@ class FileAssistant extends FileAssistantAbstract
                         ]);
 
         // create the file hash
-        $file = File::firstOrCreate([
-            'file_hash' => $this->reader->hash(),
-        ]);
+        foreach ($this->files as $file) {
+            $model = $file->getModel();
 
-        // associate the file with the conversation
-        $conversation->files()->attach($file);
+            // associate the file with the conversation
+            $conversation->files()->attach($model);
 
-        // embed the file's content
-        if ($file->wasRecentlyCreated) {
-            [$embeddings, $content] = $this->createEmbeddings();
+            // embed the file's content
+            if ($model->wasRecentlyCreated) {
+                [$embeddings, $content] = $this->createEmbeddings($file);
 
-            // store the embeddings in a vector database
-            $this->storeEmbeddings($embeddings, $content);
+                // store the embeddings in a vector database
+                $this->storeEmbeddings($file, $embeddings, $content);
+            }
         }
 
         return new InterrogateFile($conversation, $this->openAiClient);

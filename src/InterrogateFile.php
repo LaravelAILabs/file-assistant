@@ -6,6 +6,7 @@ use AdrianTanase\VectorStore\Facades\VectorStore;
 use AdrianTanase\VectorStore\Providers\Pinecone\Requests\PineconeQueryRequest;
 use Illuminate\Support\Facades\Config;
 use LaravelAILabs\FileAssistant\Abstracts\InterrogateFileAbstract;
+use LaravelAILabs\FileAssistant\Enums\RoleType;
 use LaravelAILabs\FileAssistant\Models\File;
 
 class InterrogateFile extends InterrogateFileAbstract
@@ -28,6 +29,11 @@ class InterrogateFile extends InterrogateFileAbstract
                 ->join("\n\n---\n\n");
         });
 
+        $this->conversation->messages()->create([
+            'content' => $prompt,
+            'role' => RoleType::USER->value,
+        ]);
+
         $response = $this->openAiClient->chat()->create([
             'model' => 'gpt-4',
             'messages' => [
@@ -42,6 +48,13 @@ class InterrogateFile extends InterrogateFileAbstract
             ],
         ]);
 
-        return $response->choices[0]?->message?->content ?? '';
+        $assistantResponse = $response->choices[0]?->message?->content ?? '';
+
+        $this->conversation->messages()->create([
+            'content' => $assistantResponse,
+            'role' => RoleType::ASSISTANT->value,
+        ]);
+
+        return $assistantResponse;
     }
 }

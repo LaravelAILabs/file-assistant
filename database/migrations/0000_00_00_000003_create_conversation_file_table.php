@@ -11,7 +11,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->tableName = sprintf("%s_%s", Config::get('file-assistant.tables.conversations'), Config::get('file-assistant.tables.files'));
+        $this->tableName = sprintf('%s_%s', Config::get('file-assistant.tables.conversations'), Config::get('file-assistant.tables.files'));
     }
 
     /**

@@ -10,7 +10,7 @@ return [
     'openai' => [
         'api_key' => env('OPENAI_API_KEY', ''),
     ],
-	'pinecone' => [
-		'dataset' => env('FILE_ASSISTANT_PINECONE_DATASET', '')
-	],
+    'pinecone' => [
+        'dataset' => env('FILE_ASSISTANT_PINECONE_DATASET', ''),
+    ],
 ];
