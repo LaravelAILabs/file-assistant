@@ -11,6 +11,10 @@ class FileAssistantServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('file-assistant')
-            ->hasConfigFile();
+            ->hasConfigFile('file-assistant')
+            ->hasMigrations([
+                '0000_00_00_000000_create_conversations_table',
+                '0000_00_00_000001_create_messages_table',
+            ]);
     }
 }
