@@ -3,9 +3,17 @@
 namespace LaravelAILabs\FileAssistant\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Config;
 
+/**
+ * @class Conversation
+ *
+ * @property int $user_id
+ *
+ * This class represents a conversation, extending the base Model class.
+ */
 class Conversation extends Model
 {
     protected $guarded = ['id'];
@@ -25,5 +33,10 @@ class Conversation extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function files(): BelongsToMany
+    {
+        return $this->belongsToMany(File::class);
     }
 }

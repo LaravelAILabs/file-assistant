@@ -3,16 +3,13 @@
 namespace LaravelAILabs\FileAssistant\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Config;
 
 /**
- * @class Message
- *
- * @property string $content
- * @property string $role
+ * @property string $file_hash
  */
-class Message extends Model
+class File extends Model
 {
     protected $guarded = ['id'];
 
@@ -25,11 +22,11 @@ class Message extends Model
     {
         parent::__construct($attributes);
 
-        $this->table = Config::get('file-assistant.tables.messages');
+        $this->table = Config::get('file-assistant.tables.files');
     }
 
-    public function conversation(): BelongsTo
+    public function conversations(): BelongsToMany
     {
-        return $this->belongsTo(Conversation::class);
+        return $this->belongsToMany(Conversation::class);
     }
 }

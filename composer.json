@@ -25,7 +25,7 @@
         "adrianmtanase/laravel-vector-store": "^0.0.23",
         "illuminate/contracts": "^10.0",
         "illuminate/filesystem": "*",
-        "openai-php/laravel": "^0.8.1",
+        "openai-php/client": "^0.8.2",
         "phpoffice/phpword": "^1.2",
         "smalot/pdfparser": "^2.8",
         "spatie/laravel-package-tools": "^1.14.0"
