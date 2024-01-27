@@ -21,6 +21,8 @@ class FileAssistant extends FileAssistantAbstract
 {
     private ?Model $userModel;
 
+    private ?Conversation $conversationModel;
+
     public function from(string $filePath): self
     {
         // instantiate the reader
@@ -47,20 +49,31 @@ class FileAssistant extends FileAssistantAbstract
     }
 
     /**
+     * @return $this
+     */
+    public function conversation(Conversation $conversation): self
+    {
+        $this->conversationModel = $conversation;
+
+        return $this;
+    }
+
+    /**
      * Initializes the file interrogation process.
      *
      * This method creates a new conversation, generates a file hash, associates the file with the conversation,
      * creates embeddings for the file's content, and stores the embeddings in a vector database. Finally, it returns
      * an instance of the `InterogateFile` class.
      *
-     * @return InterogateFile The initialized InterogateFile instance.
+     * @return InterrogateFile The initialized InterogateFile instance.
      */
-    public function initialize(): InterogateFile
+    public function initialize(): InterrogateFile
     {
         // create the conversation
-        $conversation = Conversation::create([
-            'user_id' => $this->userModel?->id ?? Auth::user()?->getAuthIdentifier() ?? null,
-        ]);
+        $conversation = $this->conversationModel ??
+                        Conversation::create([
+                            'user_id' => $this->userModel?->id ?? Auth::user()?->getAuthIdentifier() ?? null,
+                        ]);
 
         // create the file hash
         $file = File::firstOrCreate([
@@ -71,11 +84,13 @@ class FileAssistant extends FileAssistantAbstract
         $conversation->files()->associate($file);
 
         // embed the file's content
-        [$embeddings, $content] = $this->createEmbeddings();
+        if ($file->wasRecentlyCreated) {
+            [$embeddings, $content] = $this->createEmbeddings();
 
-        // store the embeddings in a vector database
-        $this->storeEmbeddings($embeddings, $content);
+            // store the embeddings in a vector database
+            $this->storeEmbeddings($embeddings, $content);
+        }
 
-        return new InterogateFile($conversation, $this->openAiClient);
+        return new InterrogateFile($conversation, $this->openAiClient);
     }
 }

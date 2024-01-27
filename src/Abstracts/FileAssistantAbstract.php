@@ -55,7 +55,7 @@ abstract class FileAssistantAbstract implements FileAssistantContract
             })->toArray();
 
             // store inside a vector store
-            VectorStore::dataset('vector-store')
+            VectorStore::dataset(Config::get('file-assistant.pinecone.dataset'))
                 ->namespace($this->reader->hash())
                 ->create($upsertRequests);
         });
