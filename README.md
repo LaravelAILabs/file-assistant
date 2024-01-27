@@ -28,9 +28,14 @@ php artisan vendor:publish --tag="file-assistant-config"
 ## Usage
 
 ```php
-$fileAssistant = new LaravelAILabs\FileAssistant();
-echo $fileAssistant->echoPhrase('Hello, Laravel AI Labs!');
+$dialog = FileAssistant::addFile('PATH_TO_YOUR_FILE')->initialize();
+echo $dialog->prompt('What is this document about?')
 ```
+
+## Works with
+- PDF
+- Word
+- TXT
 
 ## Testing
 
