@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static \LaravelAILabs\FileAssistant\FileAssistant addFile(string $filePath)
  * @method static \LaravelAILabs\FileAssistant\FileAssistant setUser(Model $model)
- * @method static \LaravelAILabs\FileAssistant\FileAssistant setConversation(\LaravelAILabs\FileAssistant\Models\Conversation $conversation)
+ * @method static \LaravelAILabs\FileAssistant\FileAssistant setConversation(\LaravelAILabs\FileAssistant\Models\Conversation|int|null $conversation)
  * @method static \LaravelAILabs\FileAssistant\InterrogateFile initialize()
  *
  * @see \LaravelAILabs\FileAssistant\FileAssistant
