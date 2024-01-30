@@ -5,11 +5,16 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/laravelailabs/file-assistant/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/laravelailabs/file-assistant/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravelailabs/file-assistant.svg?style=flat-square)](https://packagist.org/packages/laravelailabs/file-assistant)
 
-Analyzez files based on AI and offers the possibility to query them.
+Analyzes files based on AI and offers the possibility to query them.
 
 ## Support us
 
 If this helped you, consider supporting my development over on [Patreon](https://patreon.com/AdrianTanase443).
+
+## Demo
+Repository: [LaravelAILabs/file-assistant-demo](https://github.com/LaravelAILabs/file-assistant-demo)
+
+URL: [https://file-assistant.laravelailabs.com](https://file-assistant.laravelailabs.com)
 
 ## Installation
 
