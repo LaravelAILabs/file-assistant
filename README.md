@@ -1,4 +1,4 @@
-# AI File Assistant
+# Laravel AI File Assistant
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/laravelailabs/file-assistant.svg?style=flat-square)](https://packagist.org/packages/laravelailabs/file-assistant)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/laravelailabs/file-assistant/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/laravelailabs/file-assistant/actions?query=workflow%3Arun-tests+branch%3Amain)
