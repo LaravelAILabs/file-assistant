@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Config;
 /**
  * @class Conversation
  *
+ * @property int $id
  * @property int $user_id
  * @property \Illuminate\Database\Eloquent\Collection $messages
  *

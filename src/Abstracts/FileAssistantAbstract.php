@@ -25,7 +25,7 @@ abstract class FileAssistantAbstract implements FileAssistantContract
     /**
      * @var FileWrapper[]
      */
-    protected array $files;
+    protected array $files = [];
 
     public function __construct()
     {

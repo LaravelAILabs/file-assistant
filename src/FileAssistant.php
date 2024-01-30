@@ -41,9 +41,9 @@ class FileAssistant extends FileAssistantAbstract
      *
      * @return $this
      */
-    public function setConversation(Conversation $conversation): self
+    public function setConversation(Conversation|int|null $conversation): self
     {
-        $this->conversationModel = $conversation;
+        $this->conversationModel = is_numeric($conversation) ? Conversation::find($conversation) : $conversation;
 
         return $this;
     }
