@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Config;
 /**
  * @class Message
  *
+ * @property int $id
  * @property string $content
  * @property string $role
  */

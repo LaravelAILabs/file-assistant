@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Config;
 
 /**
+ * @class File
+ *
+ * @property int $id
  * @property string $file_hash
  */
 class File extends Model

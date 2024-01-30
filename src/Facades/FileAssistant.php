@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static FileAssistant addFile(string $filePath)
- * @method static FileAssistant setUser(Model $model)
- * @method static FileAssistant setConversation(\LaravelAILabs\FileAssistant\Models\Conversation $conversation)
+ * @method static \LaravelAILabs\FileAssistant\FileAssistant addFile(string $filePath)
+ * @method static \LaravelAILabs\FileAssistant\FileAssistant setUser(Model $model)
+ * @method static \LaravelAILabs\FileAssistant\FileAssistant setConversation(\LaravelAILabs\FileAssistant\Models\Conversation $conversation)
  * @method static \LaravelAILabs\FileAssistant\InterrogateFile initialize()
  *
  * @see \LaravelAILabs\FileAssistant\FileAssistant
