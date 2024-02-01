@@ -9,7 +9,7 @@ Analyzes files based on AI and offers the possibility to query them.
 
 ## Support us
 
-If this helped you, consider supporting my development over on [Patreon](https://patreon.com/AdrianTanase443).
+If this helped you, consider supporting my development over on [Patreon](https://patreon.com/AdrianTanase443) or on [Github](https://github.com/sponsors/adrianmtanase).
 
 ## Demo
 Repository: [LaravelAILabs/file-assistant-demo](https://github.com/LaravelAILabs/file-assistant-demo)
